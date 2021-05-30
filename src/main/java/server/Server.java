@@ -9,6 +9,7 @@ public class Server {
 
     public static final int PORT = 5000;
     static HashMap<String,Object> pwMap;
+
     public static void main(String[] args) {
         // write your code here
         ServerSocket serverSocket = null;
