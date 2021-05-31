@@ -43,26 +43,6 @@ public class Server {
                 Thread t = new Thread(new ServerThread(socket,pwMap));
                 t.start();
             }
-            /*while (true){
-                is = socket.getInputStream();
-                isr = new InputStreamReader(is, "UTF-8");
-                br = new BufferedReader(isr);
-
-                os = socket.getOutputStream();
-                osw = new OutputStreamWriter(os, "UTF-8");
-                pw = new PrintWriter(osw, true);
-
-                String buffer = null;
-                buffer = br.readLine();
-                if (buffer == null){
-                    System.out.println("[server] closed by client");
-                    break;
-                }
-
-                System.out.println("[server] recieved : " + buffer);
-                pw.println(buffer);
-            }*/
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

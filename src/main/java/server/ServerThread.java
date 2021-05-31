@@ -50,14 +50,12 @@ public class ServerThread extends Thread {
                 }else if (msg == null){
                     System.out.println("[server] " + id + " disconnected");
                     break;
-
                 }
                 System.out.println("["+id+"] " + msg);
                 //send message to clients
                 for (String key : pwMap.keySet()) {
-                    if (!key.equals(id))
-
-                        ((PrintWriter) pwMap.get(key)).println(id + "/" + msg);
+                    //if (!key.equals(id)) //don't send message to sender
+                        ((PrintWriter) pwMap.get(key)).println("["+id+"]" + msg);
                 }
             }
         }catch (IOException e){
