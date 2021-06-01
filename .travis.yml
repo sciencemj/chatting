@@ -14,7 +14,7 @@ cache:
 script: "./gradlew clean build"
 
 before_deploy:
-  - zip -r sciencemj-chatting
+  - zip -r sciencemj-chatting *
   - mkdir -p deploy
   - mv sciencemj-chatting.zip deploy/sciencemj-chatting.zip
 
