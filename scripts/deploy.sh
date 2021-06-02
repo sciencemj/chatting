@@ -9,7 +9,7 @@ cp $REPO/zip/*.jar $REPO/
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
-CURRENT_PID=$(pgrep -fl chatting)
+CURRENT_PID=$(pgrep -f chatting)
 
 echo "> 현재 구동 중인 애플리캐리션 pid: $CURRENT_PID"
 
