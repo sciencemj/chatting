@@ -14,9 +14,13 @@ cache:
 script: "./gradlew clean build"
 
 before_deploy:
-  - zip -r sciencemj-chatting *
-  - mkdir -p deploy
-  - mv sciencemj-chatting.zip deploy/sciencemj-chatting.zip
+  - mkdir -p before_deploy
+  - cp scripts/*.sh before_deploy/
+  - cp appspec.yml before_deploy/
+  - cp build/libs/*.jar before_deploy/
+  - cd before_deploy && zip -r before_deploy *
+  - cd ../ && mkdir -p deploy
+  - mv before_deploy/before_deploy.zip deploy/sciencemj-chatting.zip
 
 deploy:
   - provider: s3
