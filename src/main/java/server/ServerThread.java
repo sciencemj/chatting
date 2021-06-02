@@ -29,7 +29,7 @@ public class ServerThread extends Thread {
             br = new BufferedReader(isr);
 
             id = br.readLine();
-            pw.println("connected " + id + " to server11111");
+            pw.println("connected " + id + " to server");
             synchronized (pwMap){
                 pwMap.put(id,pw);
             }
