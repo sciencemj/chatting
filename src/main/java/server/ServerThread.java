@@ -32,6 +32,7 @@ public class ServerThread extends Thread {
             pw.println("connected " + id + " to server");
             synchronized (pwMap){
                 pwMap.put(id,pw);
+                pwSender("!player " + id);
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -59,6 +60,7 @@ public class ServerThread extends Thread {
         }finally {
             synchronized (pwMap){
                 pwMap.remove(id);
+                pwSender(id + " exit");
             }
             try {
                 if (socket != null && !socket.isClosed()) {
