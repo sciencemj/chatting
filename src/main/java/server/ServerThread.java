@@ -89,7 +89,7 @@ public class ServerThread extends Thread {
 
     public String command(String[] cmd){
         switch (cmd[0]){
-            case "player":
+            case "#player":
                 switch (cmd[1]){
                     case "list":
                         return pwMap.keySet().toString();
