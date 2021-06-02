@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Server {
 
     public static final int PORT = 5000;
-    static HashMap<String,Object> pwMap;
+    static HashMap<String,PrintWriter> pwMap;
 
     public static void main(String[] args) {
         // write your code here
@@ -33,7 +33,7 @@ public class Server {
 
             System.out.println("[server] binding:" + serverSocket.getInetAddress().getHostAddress());
 
-            pwMap = new HashMap<String,Object>();
+            pwMap = new HashMap<String,PrintWriter>();
             while(true) {
                 Socket socket = serverSocket.accept();
                 InetSocketAddress socketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();

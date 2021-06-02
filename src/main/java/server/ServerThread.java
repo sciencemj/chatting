@@ -8,10 +8,10 @@ import java.util.HashMap;
 
 public class ServerThread extends Thread {
     Socket socket;
-    HashMap<String,Object> pwMap;
+    HashMap<String,PrintWriter> pwMap;
     BufferedReader br;
     String id;
-    public ServerThread(Socket socket, HashMap<String,Object> pwMap){
+    public ServerThread(Socket socket, HashMap<String,PrintWriter> pwMap){
         this.socket = socket;
         this.pwMap = pwMap;
         try {
@@ -51,12 +51,7 @@ public class ServerThread extends Thread {
                     System.out.println("[server] " + id + " disconnected");
                     break;
                 }
-                System.out.println("["+id+"] " + msg);
-                //send message to clients
-                for (String key : pwMap.keySet()) {
-                    //if (!key.equals(id)) //don't send message to sender
-                        ((PrintWriter) pwMap.get(key)).println("["+id+"]" + msg);
-                }
+                message(msg);
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -73,6 +68,53 @@ public class ServerThread extends Thread {
                 e.printStackTrace();
                 System.out.println("[server] socket not closed correctly");
             }
+        }
+    }
+
+    public String message(String msg){
+        char first = msg.charAt(0);
+        String m;
+        if (first == '#'){
+            m = command(msg.split(" "));
+            pwSender(m, false);
+            System.out.println("[server] " + id + " issued command: " + msg);
+            System.out.println("[server] " + id + " command returned: " + m);
+        }else {
+            m = ("["+id+"] "+ msg);
+            pwSender(m);
+            System.out.println(m);
+        }
+        return m;
+    }
+
+    public String command(String[] cmd){
+        switch (cmd[0]){
+            case "player":
+                switch (cmd[1]){
+                    case "list":
+                        return pwMap.keySet().toString();
+                    default:
+                        return "wrong command: player [list]";
+                }
+            default:
+                return "wrong command";
+        }
+    }
+
+    public void pwSender(String msg, boolean all){
+        if (all){
+            for (String key : pwMap.keySet()) {
+                //if (!key.equals(id)) //don't send message to sender
+                pwMap.get(key).println(msg);
+            }
+        }else {
+            pwMap.get(id).println(msg);
+        }
+    }
+    public void pwSender(String msg){
+        for (String key : pwMap.keySet()) {
+            //if (!key.equals(id)) //don't send message to sender
+            pwMap.get(key).println(msg);
         }
     }
 }
