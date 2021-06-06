@@ -99,7 +99,7 @@ public class ServerThread extends Thread {
                         return "wrong command: player [list]";
                 }
             case "#stone_add":
-                return ("!stone_add" + cmd[1] + " " + cmd[2]);
+                return ("!stone_add " + cmd[1] + " " + cmd[2]);
             case "#stone_win":
                 return ("!stone_win " + cmd[1]);
             default:
