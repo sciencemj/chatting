@@ -1,5 +1,7 @@
 package server;
 
+import javafx.util.Pair;
+
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -75,35 +77,37 @@ public class ServerThread extends Thread {
 
     public String message(String msg){
         char first = msg.charAt(0);
+        Pair<String, Boolean> re;
         String m;
         if (first == '#'){
-            m = command(msg.split(" "));
-            pwSender(m, false);
+            re = command(msg.split(" "));
+            pwSender(re.getKey(), re.getValue());
             System.out.println("[server] " + id + " issued command: " + msg);
-            System.out.println("[server] " + id + " command returned: " + m);
+            System.out.println("[server] " + id + " command returned: " + re.toString());
+            return re.getKey();
         }else {
             m = ("["+id+"] "+ msg);
             pwSender(m);
             System.out.println(m);
+            return m;
         }
-        return m;
     }
 
-    public String command(String[] cmd){
+    public Pair<String, Boolean> command(String[] cmd){
         switch (cmd[0]){
             case "#player":
                 switch (cmd[1]){
                     case "list":
-                        return pwMap.keySet().toString();
+                        return new Pair<String,Boolean>(pwMap.keySet().toString(), false);
                     default:
-                        return "wrong command: player [list]";
+                        return new Pair<String,Boolean>("wrong command: player [list]", false);
                 }
             case "#stone_add":
-                return ("!stone_add " + cmd[1] + " " + cmd[2]);
+                return new Pair<String,Boolean>(("!stone_add " + cmd[1] + " " + cmd[2]), true);
             case "#stone_win":
-                return ("!stone_win " + cmd[1]);
+                return new Pair<String,Boolean>(("!stone_win " + cmd[1]), true);
             default:
-                return "wrong command";
+                return new Pair<String,Boolean>("wrong command",false);
         }
     }
 
