@@ -1,6 +1,7 @@
 package server;
 
-import javafx.util.Pair;
+
+import support.Pair;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -81,10 +82,10 @@ public class ServerThread extends Thread {
         String m;
         if (first == '#'){
             re = command(msg.split(" "));
-            pwSender(re.getKey(), re.getValue());
+            pwSender(re.getLeft(), re.getRight());
             System.out.println("[server] " + id + " issued command: " + msg);
             System.out.println("[server] " + id + " command returned: " + re.toString());
-            return re.getKey();
+            return re.getLeft();
         }else {
             m = ("["+id+"] "+ msg);
             pwSender(m);
